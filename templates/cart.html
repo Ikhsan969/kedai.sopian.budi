@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+<div class="cart-container">
+    {% if cart %}
+        {% for item in cart %}
+        <div class="cart-item">
+            <img src="{{ item.image }}" alt="{{ item.name }}">
+            <div class="cart-details">
+                <h3>{{ item.name }}</h3>
+                <p class="price">${{ item.price }}</p>
+                <button class="remove-button" onclick="removeFromCart('{{ item.id }}')">Remove</button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="cart-total">
+            <h3>Total: $<span id="total-price">0.00</span></h3>
+        </div>
+
+        <button class="checkout-button">Proceed to Checkout</button>
+
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+
+<a href="/" class="back-link">← Back to Menu</a>
+
+<script>
+    function updateTotalPrice() {
+        let total = 0;
+        document.querySelectorAll('.price').forEach(price => {
+            total += parseFloat(price.textContent.replace('$', ''));
+        });
+        document.getElementById('total-price').textContent = total.toFixed(2);
+    }
+
+    function removeFromCart(itemId) {
+        fetch('/remove_from_cart', {
+            method: 'POST',
+            body: JSON.stringify({ id: itemId }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();  // Refresh halaman setelah item dihapus
+            }
+        });
+    }
+
+    window.onload = updateTotalPrice;
+</script>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="menu-container">
+    {% for item in menu %}
+    <div class="menu-item">
+        <img src="{{ item.image }}" alt="{{ item.name }}">
+        <h3>{{ item.name }}</h3>
+        <p class="price">${{ item.price }}</p>
+        <div class="add-button" onclick="addToCart('{{ item.id }}')">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    function addToCart(itemId) {
+        fetch('/add_to_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: itemId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message); // Notifikasi bahwa item ditambahkan ke keranjang
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}

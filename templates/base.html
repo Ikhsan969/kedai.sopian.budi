@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Sopian Budi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img alt="Green Grounds Coffee Logo" src="{{ url_for('static', filename='images/logo.png') }}"/>
+            <div class="h1">GREEN GROUNDS COFFEE</div>
+        </div>
+        <div class="icons">
+            <i class="fas fa-file-alt"></i>
+            <i class="fas fa-bell"></i>
+        </div>
+        <div class="user-info">
+            <img alt="User Profile Picture" src="{{ url_for('static', filename='images/avatar.png') }}"/>
+            <div>
+                <div class="name">Samantha W</div>
+                <div class="role">Cashier</div>
+            </div>
+        </div>
+    </div>
+    <div class="search-bar">
+        <input placeholder="Search" type="text"/>
+    </div>
+<main class="content">
+    <div class="card">
+        <div class="status">Available</div>
+        <img alt="Coffee Image" src="{{ url_for('static', filename='images/branda.png') }}"/>
+        <div class="title"><a href="{{ url_for('index') }}">Home</a></div>
+    </div>
+    <div class="card">
+        <div class="status">Available</div>
+        <img alt="Tea Image" src="{{ url_for('static', filename='images/keranjang.png') }}"/>
+        <div class="title"><a href="{{ url_for('cart') }}">Keranjang</a></div>
+    </div>
+    <div class="card snack">
+        <div class="status">Need to re-stock</div>
+        <img alt="Snack Image" src="{{ url_for('static', filename='images/lokasi.jpg') }}"/>
+        <div class="title"> <a href="https://maps.app.goo.gl/1oT3ik6c9ymKNL9A6">Lokasi</a></div>
+    </div>
+</main>
+<div class="menu-wrapper">
+    {% block content %}{% endblock %}
+</div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
